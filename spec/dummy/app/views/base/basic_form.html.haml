@@ -1,0 +1,5 @@
+= form_for @user, url: '/somewhere' do |f|
+  = f.text_field :first_name
+  = f.text_field :last_name
+  = f.select :gender, %i(m f)
+  = f.text_area :description
