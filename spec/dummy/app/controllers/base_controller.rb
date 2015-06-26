@@ -3,15 +3,19 @@ class BaseController < ApplicationController
     @user = User.new
   end
 
-  def nested_form
+  def fields_for
     @user = User.new
     @user.addresses.build
     @user.build_tag
   end
 
-  def deeply_nested_form
+  def deep_fields_for
     @user = User.new
     (@user.addresses.build).tags.build
     @user.build_tag
+  end
+
+  def nested_form_gem
+    @user = User.new
   end
 end

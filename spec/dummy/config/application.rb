@@ -4,6 +4,7 @@ require 'rails/all'
 
 Bundler.require(*Rails.groups)
 require 'haml-rails'
+require 'nested_form'
 require 'strong_form'
 
 module Dummy

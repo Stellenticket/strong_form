@@ -15,6 +15,8 @@ module StrongForm
       "ActionView::Helpers::Tags::#{klass}"
         .constantize.prepend StrongForm::Tag
     end
+
+    defined?(NestedForm) && require('strong_form/nested_form')
   end
 
   class Railtie < Rails::Railtie

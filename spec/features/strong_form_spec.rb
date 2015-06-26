@@ -52,7 +52,7 @@ RSpec.describe 'strong form' do
   end
 
   describe 'nested form' do
-    subject { visit '/nested_form' }
+    subject { visit '/fields_for' }
 
     context 'without permitted attributes' do
       before(:each) { subject }
@@ -156,7 +156,7 @@ RSpec.describe 'strong form' do
   end
 
   describe 'deeply nested form' do
-    subject { visit '/deeply_nested_form' }
+    subject { visit '/deep_fields_for' }
 
     context 'without permitted attributes' do
       before(:each) { subject }
@@ -200,6 +200,95 @@ RSpec.describe 'strong form' do
             '[name="user[addresses_attributes][0][tags_attributes][0][name]"]'
           )[:disabled])
             .to be_falsy
+        end
+      end
+    end
+  end
+
+  describe 'nested form gem' do
+    subject { visit '/nested_form_gem' }
+
+    it 'should work' do
+      subject
+    end
+
+    context 'without permitted attributes' do
+      before(:each) { subject }
+
+      describe 'link to add' do
+        it 'should be displayed' do
+          expect(page)
+            .to have_selector('[data-blueprint-id="addresses_fields_blueprint"]')
+        end
+
+        it 'blueprint should not have disabled fields' do
+          expect(find('#addresses_fields_blueprint', visible: false)[:'data-blueprint'])
+            .not_to include('disabled')
+        end
+      end
+    end
+
+    context 'with permitted attributes not including association' do
+      before(:each) do
+        new_user = User.new
+        allow(User).to receive(:new) do
+          new_user.permitted_attributes = []
+          new_user
+        end
+        subject
+      end
+
+      describe 'link to add' do
+        it 'should not be displayed' do
+          expect(page)
+            .not_to have_selector('[data-blueprint-id="addresses_fields_blueprint"]')
+        end
+
+        it 'should not add blueprint' do
+          expect(page.all('#addresses_fields_blueprint', visible: false).length)
+            .to eq(0)
+        end
+      end
+    end
+
+    context 'with permitted attributes including association' do
+      before(:each) do
+        new_user = User.new
+        allow(User).to receive(:new) do
+          new_user.permitted_attributes = [
+            addresses_attributes: [:city]
+          ]
+          new_user
+        end
+        subject
+      end
+
+      describe 'link to add' do
+        it 'should be displayed' do
+          expect(page)
+            .to have_selector('[data-blueprint-id="addresses_fields_blueprint"]')
+        end
+
+        it 'should add blueprint' do
+          expect(page.all('#addresses_fields_blueprint', visible: false).length)
+            .to eq(1)
+        end
+
+        (all_addresses_attributes - %i(city)).each do |attr|
+          it "should disable address #{attr} in blueprint" do
+            blueprint =
+              page.find('#addresses_fields_blueprint', visible: false)[:'data-blueprint']
+            tag = blueprint.match(/<[^>]+name=[^>]*#{attr}.*?>/)[0]
+
+            expect(tag).to include('disabled')
+          end
+        end
+        it 'should enable address city in blueprint' do
+          blueprint =
+            page.find('#addresses_fields_blueprint', visible: false)[:'data-blueprint']
+          city_tag = blueprint.match(/<[^>]+name=[^>]*city.*?>/)[0]
+
+          expect(city_tag).not_to include('disabled')
         end
       end
     end

@@ -35,20 +35,10 @@ module ActionView
           record_name.match(/.*?\[([^\]\[]+)\](\[[0-9]+\])?$/)[1].to_sym
 
         # find the hash with the key `child_models_attributes`
-        child_attributes =
-          parent_permitted_attributes.find do |o|
-            o.is_a?(Hash) && o.keys.include?(permitted_name)
-          end
-
-        if child_attributes
-          # set our records permitted attributes
-          child_attributes = child_attributes[permitted_name]
-          child_attributes = [child_attributes] unless child_attributes.is_a?(Array)
-          record_object.permitted_attributes = child_attributes
-        else
-          # allow nothing
-          record_object.permitted_attributes = []
-        end
+        record_object.permitted_attributes =
+          StrongForm::Finder.find_child_permitted_attributes(
+            permitted_name, parent_permitted_attributes
+          )
       end
       private :assign_child_permitted_attributes!
 
@@ -56,7 +46,7 @@ module ActionView
       def fields_for(record_name, record_object = nil, options = {}, &block)
         assign_child_permitted_attributes!(
           record_name, record_object, options[:parent_builder].object.permitted_attributes
-        ) if permitted_attributes && record_object.respond_to?(:permitted_attributes=)
+        ) if permitted_attributes && record_object.respond_to?(:permitted_attributes=) && record_object.permitted_attributes.nil?
 
         builder = instantiate_builder(record_name, record_object, options)
         capture(builder, &block)
