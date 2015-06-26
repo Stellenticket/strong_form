@@ -40,10 +40,15 @@ module ActionView
             o.is_a?(Hash) && o.keys.include?(permitted_name)
           end
 
-        # if found, set our records permitted attributes
-        # else allow nothing
-        record_object.permitted_attributes =
-          child_attributes ? child_attributes[permitted_name] : []
+        if child_attributes
+          # set our records permitted attributes
+          child_attributes = child_attributes[permitted_name]
+          child_attributes = [child_attributes] unless child_attributes.is_a?(Array)
+          record_object.permitted_attributes = child_attributes
+        else
+          # allow nothing
+          record_object.permitted_attributes = []
+        end
       end
       private :assign_child_permitted_attributes!
 

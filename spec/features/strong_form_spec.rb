@@ -154,4 +154,54 @@ RSpec.describe 'strong form' do
       end
     end
   end
+
+  describe 'deeply nested form' do
+    subject { visit '/deeply_nested_form' }
+
+    context 'without permitted attributes' do
+      before(:each) { subject }
+
+      describe 'deeply nested has_many association' do
+        all_tags_attributes.each do |attr|
+          it "should enable address tag #{attr}" do
+            expect(page.find(
+              '[name="user[addresses_attributes][0][tags_attributes][0][' + attr.to_s + ']"]'
+            )[:disabled])
+              .to be_falsy
+          end
+        end
+      end
+    end
+
+    context 'with permitted attributes deeply nested tag' do
+      before(:each) do
+        new_user = User.new
+        allow(User).to receive(:new) do
+          new_user.permitted_attributes = [
+            addresses_attributes: { tags_attributes: [:name] }
+          ]
+          new_user
+        end
+        subject
+      end
+
+      describe 'deeply nested has_many association' do
+        (all_tags_attributes - %i(name)).each do |attr|
+          it "should disable address tag #{attr}" do
+            expect(page.find(
+              '[name="user[addresses_attributes][0][tags_attributes][0][' + attr.to_s + ']"]'
+            )[:disabled])
+              .to be_truthy
+          end
+        end
+
+        it 'should enable address tag name' do
+          expect(page.find(
+            '[name="user[addresses_attributes][0][tags_attributes][0][name]"]'
+          )[:disabled])
+            .to be_falsy
+        end
+      end
+    end
+  end
 end
