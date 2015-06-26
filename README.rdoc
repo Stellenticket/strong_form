@@ -1,3 +1,0 @@
-= StrongForm
-
-This project rocks and uses AGPL-LICENSE.
