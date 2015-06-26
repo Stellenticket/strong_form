@@ -226,6 +226,13 @@ RSpec.describe 'strong form' do
             .not_to include('disabled')
         end
       end
+
+      describe 'link to remove' do
+        it 'should be displayed' do
+          expect(page)
+            .to have_selector('a.remove_nested_fields[data-association="addresses"]')
+        end
+      end
     end
 
     context 'with permitted attributes not including association' do
@@ -249,6 +256,13 @@ RSpec.describe 'strong form' do
             .to eq(0)
         end
       end
+
+      describe 'link to remove' do
+        it 'should not be displayed' do
+          expect(page)
+            .not_to have_selector('a.remove_nested_fields[data-association="addresses"]')
+        end
+      end
     end
 
     context 'with permitted attributes including association' do
@@ -256,7 +270,7 @@ RSpec.describe 'strong form' do
         new_user = User.new
         allow(User).to receive(:new) do
           new_user.permitted_attributes = [
-            addresses_attributes: [:city]
+            addresses_attributes: %i(city _destroy)
           ]
           new_user
         end
@@ -283,12 +297,40 @@ RSpec.describe 'strong form' do
             expect(tag).to include('disabled')
           end
         end
+
         it 'should enable address city in blueprint' do
           blueprint =
             page.find('#addresses_fields_blueprint', visible: false)[:'data-blueprint']
           city_tag = blueprint.match(/<[^>]+name=[^>]*city.*?>/)[0]
 
           expect(city_tag).not_to include('disabled')
+        end
+      end
+
+      describe 'link to remove' do
+        it 'should be displayed' do
+          expect(page)
+            .to have_selector('a.remove_nested_fields[data-association="addresses"]')
+        end
+      end
+    end
+
+    context 'with permitted attributes including association without _destroy' do
+      before(:each) do
+        new_user = User.new
+        allow(User).to receive(:new) do
+          new_user.permitted_attributes = [
+            addresses_attributes: %i(city)
+          ]
+          new_user
+        end
+        subject
+      end
+
+      describe 'link to remove' do
+        it 'should not be displayed' do
+          expect(page)
+            .not_to have_selector('a.remove_nested_fields[data-association="addresses"]')
         end
       end
     end

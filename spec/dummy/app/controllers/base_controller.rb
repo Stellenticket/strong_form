@@ -17,5 +17,6 @@ class BaseController < ApplicationController
 
   def nested_form_gem
     @user = User.new
+    @user.addresses.build
   end
 end

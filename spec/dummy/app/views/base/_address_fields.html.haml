@@ -3,5 +3,8 @@
 = f.text_field :street
 = f.text_area :description
 
+- if f.respond_to?(:link_to_remove)
+  = f.link_to_remove 'remove'
+
 = f.fields_for :tags do |tf|
   = render 'tag_fields', f: tf

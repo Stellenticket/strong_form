@@ -1,6 +1,7 @@
 module NestedForm
   module BuilderMixin
     alias_method :orig_link_to_add, :link_to_add
+    alias_method :orig_link_to_remove, :link_to_remove
 
     def link_to_add(association, options = {}, &block)
       if object.respond_to?(:permitted_attributes)
@@ -24,6 +25,14 @@ module NestedForm
       end
 
       orig_link_to_add(association, options, &block)
+    end
+
+    def link_to_remove(*args, &block)
+      return if object.respond_to?(:permitted_attributes) &&
+                !object.permitted_attributes.nil? &&
+                object.permitted_attributes != true &&
+                !object.permitted_attributes.include?(:_destroy)
+      orig_link_to_remove(*args, &block)
     end
   end
 end
