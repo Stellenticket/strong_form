@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'basic_form', controller: 'base', action: 'basic_form'
+  get ':action', controller: 'base'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
