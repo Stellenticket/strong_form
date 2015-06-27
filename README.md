@@ -44,6 +44,10 @@ StrongForm includes support for [nested_form](https://github.com/ryanb/nested_fo
 and hides the `link_to_add` and `link_to_remove` if it is not possible to create
 new or remove existing records.
 
+Code Status
+===
+[![Build Status](https://travis-ci.org/Stellenticket/strong_form.svg?branch=master)](https://travis-ci.org/Stellenticket/strong_form)
+
 ToDo
 ===
 
