@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = 'Allows to alter form fields based on permitted attributes.'
   s.license     = 'AGPL-3.0'
 
-  s.files = Dir['{app,config,db,lib}/**/*', 'AGPL-LICENSE', 'Rakefile', 'README.rdoc']
+  s.files = Dir['{app,config,db,lib}/**/*', 'AGPL-LICENSE', 'Rakefile', 'README.md']
   s.test_files = Dir['spec/**/*']
 
   s.add_dependency 'rails', '~> 4.0'
