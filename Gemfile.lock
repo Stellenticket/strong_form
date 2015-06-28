@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     strong_form (0.0.1)
-      rails (~> 4.2)
+      rails (~> 4.0)
 
 GEM
   remote: https://rubygems.org/
@@ -155,12 +155,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  capybara
-  haml-rails
-  nested_form
-  pry-rails
-  rspec-rails (~> 3.3)
-  sqlite3
+  capybara (~> 2.0)
+  haml-rails (~> 0.9)
+  nested_form (~> 0.3)
+  pry-rails (~> 0.3)
+  rspec-rails (~> 3.0)
+  sqlite3 (> 1)
   strong_form!
 
 BUNDLED WITH

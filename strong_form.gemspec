@@ -17,12 +17,12 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'AGPL-LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['spec/**/*']
 
-  s.add_dependency 'rails', '~> 4.2'
+  s.add_dependency 'rails', '~> 4.0'
 
-  s.add_development_dependency 'sqlite3'
-  s.add_development_dependency 'rspec-rails', '~> 3.3'
-  s.add_development_dependency 'nested_form'
-  s.add_development_dependency 'capybara'
-  s.add_development_dependency 'haml-rails'
-  s.add_development_dependency 'pry-rails'
+  s.add_development_dependency 'sqlite3', '> 1'
+  s.add_development_dependency 'rspec-rails', '~> 3.0'
+  s.add_development_dependency 'nested_form', '~> 0.3'
+  s.add_development_dependency 'capybara', '~> 2.0'
+  s.add_development_dependency 'haml-rails', '~> 0.9'
+  s.add_development_dependency 'pry-rails', '~> 0.3'
 end
