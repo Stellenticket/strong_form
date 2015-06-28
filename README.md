@@ -37,6 +37,21 @@ so the resulting html will be:
 Makes it easy to reuse form partials for different permitted attributes / user
 rights.
 
+Installation
+===
+
+Add it to your Gemfile then run bundle to install it.
+
+```
+gem 'strong_form'
+```
+
+Now you can pass `permitted_attributes` to your forms:
+
+```
+form_for @user, permitted_attributes: [:first_name, :last_name, ...] {}
+```
+
 Nested Form gem support
 ===
 
