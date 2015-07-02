@@ -3,5 +3,8 @@
 
   = f.fields_for :addresses do |af|
     = render 'address_fields', f: af
-  = f.link_to_add :addresses do
-    Add
+  - if params[:inline_link_to_add]
+    = f.link_to_add 'Add', :addresses, bla: :blub
+  - else
+    = f.link_to_add :addresses, bla: :blub do
+      Add

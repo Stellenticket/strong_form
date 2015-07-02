@@ -3,7 +3,10 @@ module NestedForm
     alias_method :orig_link_to_add, :link_to_add
     alias_method :orig_link_to_remove, :link_to_remove
 
-    def link_to_add(association, options = {}, &block)
+    def link_to_add(*args, &block)
+      options = args.extract_options!.symbolize_keys
+      association = args.pop
+
       if object.respond_to?(:permitted_attributes)
         return unless object.permitted_nested_attributes?(association)
 
@@ -24,7 +27,7 @@ module NestedForm
         end
       end
 
-      orig_link_to_add(association, options, &block)
+      orig_link_to_add(*args, association, options, &block)
     end
 
     def link_to_remove(*args, &block)

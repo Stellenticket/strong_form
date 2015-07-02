@@ -206,7 +206,8 @@ RSpec.describe 'strong form' do
   end
 
   describe 'nested form gem' do
-    subject { visit '/nested_form_gem' }
+    let(:extra_params) { {} }
+    subject { visit('/nested_form_gem?' + extra_params.to_query) }
 
     it 'should work' do
       subject
@@ -216,9 +217,29 @@ RSpec.describe 'strong form' do
       before(:each) { subject }
 
       describe 'link to add' do
-        it 'should be displayed' do
-          expect(page)
-            .to have_selector('[data-blueprint-id="addresses_fields_blueprint"]')
+        context 'with block syntax' do
+          it 'should be displayed' do
+            expect(page)
+              .to have_selector('[data-blueprint-id="addresses_fields_blueprint"]')
+          end
+
+          it 'should have extra html attributes' do
+            expect(page.find('[data-blueprint-id="addresses_fields_blueprint"]')[:bla])
+              .to eql('blub')
+          end
+        end
+
+        context 'without block syntax' do
+          let(:extra_params) { { inline_link_to_add: true } }
+          it 'should be displayed' do
+            expect(page)
+              .to have_selector('[data-blueprint-id="addresses_fields_blueprint"]')
+          end
+
+          it 'should have extra html attributes' do
+            expect(page.find('[data-blueprint-id="addresses_fields_blueprint"]')[:bla])
+              .to eql('blub')
+          end
         end
 
         it 'blueprint should not have disabled fields' do
