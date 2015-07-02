@@ -1,5 +1,11 @@
 # Change Log
 
+## master
+
+### Build system
+
+* Add CHANGELOG.md to gemspec
+
 ## 0.0.2
 
 ### Bugs fixed
