@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    strong_form (0.0.2)
+    strong_form (0.0.3)
       rails (~> 4.0)
 
 GEM
