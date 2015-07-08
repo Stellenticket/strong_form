@@ -2,6 +2,8 @@
 
 ## master
 
+## 0.0.3
+
 ### Bugs fixed
 
 * Rename `permitted_attributes` to  `_strong_form_permitted_attributes` because
