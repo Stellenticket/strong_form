@@ -2,6 +2,12 @@
 
 ## master
 
+### Bugs fixed
+
+* Rename `permitted_attributes` to  `_strong_form_permitted_attributes` because
+  it would get overwritten if there is a helper method `permitted_attributes` in
+  controller
+
 ### Build system
 
 * Add CHANGELOG.md to gemspec

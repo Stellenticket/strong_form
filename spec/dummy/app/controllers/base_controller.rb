@@ -1,4 +1,6 @@
 class BaseController < ApplicationController
+  helper_method :permitted_attributes
+
   def basic_form
     @user = User.new
   end
@@ -18,5 +20,13 @@ class BaseController < ApplicationController
   def nested_form_gem
     @user = User.new
     @user.addresses.build
+  end
+
+  private
+
+  def permitted_attributes
+    {
+      bla: :blub
+    }
   end
 end

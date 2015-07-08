@@ -3,17 +3,17 @@ module ActionView
     module FormHelper
       alias_method :orig_form_for, :form_for
 
-      attr_accessor :permitted_attributes
+      attr_accessor :_strong_form_permitted_attributes
 
       def form_for(record, options = {}, &block)
         # explicilty passed
         if options.key?(:permitted_attributes)
-          self.permitted_attributes = options.delete(:permitted_attributes)
+          self._strong_form_permitted_attributes = options.delete(:permitted_attributes)
           record.permitted_attributes =
-            permitted_attributes if record.respond_to?(:permitted_attributes=)
+            _strong_form_permitted_attributes if record.respond_to?(:permitted_attributes=)
         # assigned to object
         elsif record.respond_to?(:permitted_attributes)
-          self.permitted_attributes = record.permitted_attributes
+          self._strong_form_permitted_attributes = record.permitted_attributes
         end
 
         orig_form_for(record, options, &block)
@@ -46,7 +46,7 @@ module ActionView
       def fields_for(record_name, record_object = nil, options = {}, &block)
         assign_child_permitted_attributes!(
           record_name, record_object, options[:parent_builder].object.permitted_attributes
-        ) if permitted_attributes && record_object.respond_to?(:permitted_attributes=) && record_object.permitted_attributes.nil?
+        ) if _strong_form_permitted_attributes && record_object.respond_to?(:permitted_attributes=) && record_object.permitted_attributes.nil?
 
         builder = instantiate_builder(record_name, record_object, options)
         capture(builder, &block)
