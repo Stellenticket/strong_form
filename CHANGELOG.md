@@ -2,6 +2,13 @@
 
 ## master
 
+## 0.0.4
+
+### Bugs fixed
+
+* Different (saner?) way of initialization to fix stack level too deep errors
+  when classes are not cached (`Module.prepend` didn't work like it should)
+
 ## 0.0.3
 
 ### Bugs fixed

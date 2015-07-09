@@ -1,31 +1,32 @@
 module StrongForm
-  def self.inject
-    ActiveRecord::Base.include StrongForm::Record
-
-    %w(
-      CheckBox
-      CollectionSelect
-      DateSelect
-      RadioButton
-      Select
-      TextArea
-      TextField
-      TimeZoneSelect
-    ).each do |klass|
-      "ActionView::Helpers::Tags::#{klass}"
-        .constantize.prepend StrongForm::Tag
-    end
-
-    defined?(NestedForm) && require('strong_form/nested_form')
-  end
-
   class Railtie < Rails::Railtie
     initializer 'strong_form.injects' do
-      if !Rails.env.test? && Rails.configuration.cache_classes
-        StrongForm.inject
-      else
-        ActionDispatch::Reloader.to_prepare { StrongForm.inject }
+      ActiveSupport.on_load(:active_record) do
+        ActiveRecord::Base.include StrongForm::Record
       end
+
+      ActiveSupport.on_load(:action_view) do
+        %w(
+          CheckBox
+          CollectionSelect
+          DateSelect
+          RadioButton
+          Select
+          TextArea
+          TextField
+          TimeZoneSelect
+        ).each do |klass|
+          "ActionView::Helpers::Tags::#{klass}"
+            .constantize.include StrongForm::Tag
+        end
+
+        if defined?(::NestedForm)
+          require('strong_form/nested_form')
+          require('nested_form/builder_mixin')
+          ::NestedForm::BuilderMixin.include StrongForm::NestedForm
+        end
+      end
+
     end
   end
 end
