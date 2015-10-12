@@ -6,14 +6,15 @@ module ActionView
       attr_accessor :_strong_form_permitted_attributes
 
       def form_for(record, options = {}, &block)
+        object = record.is_a?(Array) ? record.last : record
         # explicilty passed
         if options.key?(:permitted_attributes)
           self._strong_form_permitted_attributes = options.delete(:permitted_attributes)
-          record.permitted_attributes =
-            _strong_form_permitted_attributes if record.respond_to?(:permitted_attributes=)
+          object.permitted_attributes =
+            _strong_form_permitted_attributes if object.respond_to?(:permitted_attributes=)
         # assigned to object
-        elsif record.respond_to?(:permitted_attributes)
-          self._strong_form_permitted_attributes = record.permitted_attributes
+        elsif object.respond_to?(:permitted_attributes)
+          self._strong_form_permitted_attributes = object.permitted_attributes
         end
 
         orig_form_for(record, options, &block)
