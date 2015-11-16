@@ -6,7 +6,7 @@ module ActionView
       def form_for(record, options = {}, &block)
         object = record.is_a?(Array) ? record.last : record
 
-        if options.key?(:permitted_attributes) && object.respond_to(:permitted_attributes=)
+        if options.key?(:permitted_attributes) && object.respond_to?(:permitted_attributes=)
           object.permitted_attributes = options.delete(:permitted_attributes)
         end
 
