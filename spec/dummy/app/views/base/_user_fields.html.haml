@@ -2,3 +2,4 @@
 = f.text_field :last_name
 = f.select :gender, %i(m f)
 = f.text_area :description
+= f.select :roles, %i(admin user banned), multiple: true

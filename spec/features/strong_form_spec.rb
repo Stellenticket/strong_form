@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 def all_user_attributes
-  %i(first_name last_name gender description)
+  %i(first_name last_name gender description roles)
 end
 
 def all_addresses_attributes
@@ -31,13 +31,13 @@ RSpec.describe 'strong form' do
       before(:each) do
         new_user = User.new
         allow(User).to receive(:new) do
-          new_user.permitted_attributes = [:last_name]
+          new_user.permitted_attributes = [:last_name, roles: []]
           new_user
         end
         subject
       end
 
-      (all_user_attributes - %i(last_name)).each do |attr|
+      (all_user_attributes - %i(last_name roles)).each do |attr|
         it "should disable #{attr}" do
           expect(page.find('[name="user[' + attr.to_s + ']"]')[:disabled])
             .to be_truthy
@@ -46,6 +46,11 @@ RSpec.describe 'strong form' do
 
       it 'should enable last_name' do
         expect(page.find('[name="user[last_name]"]')[:disabled])
+          .to be_falsy
+      end
+
+      it 'should enable roles' do
+        expect(page.find('[name="user[roles]"]')[:disabled])
           .to be_falsy
       end
     end

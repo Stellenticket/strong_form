@@ -2,6 +2,14 @@
 
 ## master
 
+## 0.0.6
+
+### Bugs fixed
+
+* Permit array attributes with `[roles: []]`, too, not only with `[:roles]`.
+  In fact it is OK to have either the symbol or a hash with the key (value is
+  ignored). Makes this more compatible with Rail`s strong params.
+
 ## 0.0.5
 
 ### Bugs fixed
