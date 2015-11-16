@@ -1,8 +1,11 @@
 = form_for @user, url: '/somewhere' do |f|
   = render 'user_fields', f: f
 
-  = f.fields_for :addresses, permitted_attributes: %i(street) do |af|
+  = f.fields_for :addresses, permitted_attributes: [:street, user_attributes: [:last_name]] do |af|
     = render 'address_fields', f: af
+
+    = af.fields_for :user, User.new do |uf|
+      = render 'user_fields', f: uf
 
   = f.fields_for :tag do |tf|
     = render 'tag_fields', f: tf

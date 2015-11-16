@@ -2,6 +2,14 @@
 
 ## master
 
+## 0.0.7
+
+### Bugs fixed
+
+* Fix disabling of child attributes if only `fields_for` has permitted_attributes
+
+* Simplify code
+
 ## 0.0.6
 
 ### Bugs fixed

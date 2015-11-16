@@ -3,4 +3,5 @@ class Address < ActiveRecord::Base
 
   has_many :tags, as: :taggable
   accepts_nested_attributes_for :tags
+  accepts_nested_attributes_for :user
 end

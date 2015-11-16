@@ -3,18 +3,11 @@ module ActionView
     module FormHelper
       alias_method :orig_form_for, :form_for
 
-      attr_accessor :_strong_form_permitted_attributes
-
       def form_for(record, options = {}, &block)
         object = record.is_a?(Array) ? record.last : record
-        # explicilty passed
-        if options.key?(:permitted_attributes)
-          self._strong_form_permitted_attributes = options.delete(:permitted_attributes)
-          object.permitted_attributes =
-            _strong_form_permitted_attributes if object.respond_to?(:permitted_attributes=)
-        # assigned to object
-        elsif object.respond_to?(:permitted_attributes)
-          self._strong_form_permitted_attributes = object.permitted_attributes
+
+        if options.key?(:permitted_attributes) && object.respond_to(:permitted_attributes=)
+          object.permitted_attributes = options.delete(:permitted_attributes)
         end
 
         orig_form_for(record, options, &block)
@@ -45,14 +38,15 @@ module ActionView
 
       # https://github.com/rails/rails/blob/4-2-stable/actionview/lib/action_view/helpers/form_helper.rb#L712
       def fields_for(record_name, record_object = nil, options = {}, &block)
-        if _strong_form_permitted_attributes &&
-           record_object.respond_to?(:permitted_attributes=) &&
-           record_object.permitted_attributes.nil?
-          assign_child_permitted_attributes!(
-            record_name, record_object, options[:parent_builder].object.permitted_attributes
-          )
-        elsif options.key?(:permitted_attributes) && record_object.respond_to?(:permitted_attributes=)
-          record_object.permitted_attributes = options[:permitted_attributes]
+        if record_object.respond_to?(:permitted_attributes=)
+          if options.key?(:permitted_attributes)
+            record_object.permitted_attributes = options[:permitted_attributes]
+          elsif options[:parent_builder].object.try(:permitted_attributes) &&
+                record_object.permitted_attributes.nil?
+            assign_child_permitted_attributes!(
+              record_name, record_object, options[:parent_builder].object.permitted_attributes
+            )
+          end
         end
 
         builder = instantiate_builder(record_name, record_object, options)
