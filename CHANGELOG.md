@@ -2,6 +2,12 @@
 
 ## master
 
+## 0.0.8
+
+### Bugs fixed
+
+* Fix typo `respond_to` --> `respond_to?`
+
 ## 0.0.7
 
 ### Bugs fixed
