@@ -45,9 +45,15 @@ module ActionView
 
       # https://github.com/rails/rails/blob/4-2-stable/actionview/lib/action_view/helpers/form_helper.rb#L712
       def fields_for(record_name, record_object = nil, options = {}, &block)
-        assign_child_permitted_attributes!(
-          record_name, record_object, options[:parent_builder].object.permitted_attributes
-        ) if _strong_form_permitted_attributes && record_object.respond_to?(:permitted_attributes=) && record_object.permitted_attributes.nil?
+        if _strong_form_permitted_attributes &&
+           record_object.respond_to?(:permitted_attributes=) &&
+           record_object.permitted_attributes.nil?
+          assign_child_permitted_attributes!(
+            record_name, record_object, options[:parent_builder].object.permitted_attributes
+          )
+        elsif options.key?(:permitted_attributes) && record_object.respond_to?(:permitted_attributes=)
+          record_object.permitted_attributes = options[:permitted_attributes]
+        end
 
         builder = instantiate_builder(record_name, record_object, options)
         capture(builder, &block)

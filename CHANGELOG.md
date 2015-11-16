@@ -2,6 +2,13 @@
 
 ## master
 
+## 0.0.5
+
+### Bugs fixed
+
+* Make `fields_for` work with `permitted_attributes` even if parent form was not
+  initialized with them.
+
 ## 0.0.4
 
 ### Bugs fixed

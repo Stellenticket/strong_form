@@ -155,6 +155,27 @@ RSpec.describe 'strong form' do
     end
   end
 
+  describe 'fields_for with explicit permitted attributes' do
+    subject { visit '/fields_for_explicit' }
+    before(:each) { subject }
+
+    it 'enables explicitly passed permitted attributes of child' do
+      expect(page.find(
+        '[name="user[addresses_attributes][0][street]"]'
+      )[:disabled])
+        .to be_falsy
+    end
+
+    (all_addresses_attributes - [:street]).each do |attr|
+      it "disables not explicitly permitted attribute #{attr}" do
+        expect(page.find(
+          '[name="user[addresses_attributes][0][' + attr.to_s + ']"]'
+        )[:disabled])
+          .to be_truthy
+      end
+    end
+  end
+
   describe 'deeply nested form' do
     subject { visit '/deep_fields_for' }
 
