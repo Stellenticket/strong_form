@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 if ENV['RAILS_VERSION'] == '5'
-  gem 'rails', '~> 5.0.0.beta1'
+  gem 'rails', '~> 5.x'
   %w(rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support).each do |lib|
     gem lib, git: "git://github.com/rspec/#{lib}.git", branch: 'master'
   end
