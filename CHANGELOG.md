@@ -2,6 +2,14 @@
 
 ## master
 
+## 0.0.9
+
+* Make it work with Rails 5
+
+* Raise ruby dependency to `>= 2.2.2`
+
+* Test agains Rails 5, too
+
 ## 0.0.8
 
 ### Bugs fixed
