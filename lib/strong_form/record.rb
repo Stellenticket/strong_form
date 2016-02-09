@@ -9,8 +9,8 @@ module StrongForm
     def permitted_nested_attributes?(attr)
       permitted_attributes.nil? || permitted_attributes == true ||
         permitted_attributes.any? do |o|
-        o.is_a?(Hash) && o.keys.include?("#{attr}_attributes".to_sym)
-      end
+          o.is_a?(Hash) && o.keys.include?("#{attr}_attributes".to_sym)
+        end
     end
   end
 end

@@ -1,7 +1,7 @@
 module ActionView
   module Helpers
     module FormHelper
-      alias_method :orig_form_for, :form_for
+      alias orig_form_for form_for
 
       def form_for(record, options = {}, &block)
         object = record.is_a?(Array) ? record.last : record

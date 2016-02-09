@@ -26,7 +26,6 @@ module StrongForm
           ::NestedForm::BuilderMixin.include StrongForm::NestedForm
         end
       end
-
     end
   end
 end

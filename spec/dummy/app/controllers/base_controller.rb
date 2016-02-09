@@ -19,7 +19,7 @@ class BaseController < ApplicationController
 
   def deep_fields_for
     @user = User.new
-    (@user.addresses.build).tags.build
+    @user.addresses.build.tags.build
     @user.build_tag
   end
 

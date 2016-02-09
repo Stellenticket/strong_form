@@ -25,7 +25,7 @@ module StrongForm
               options[:model_object].permitted_attributes =
                 StrongForm::Finder.find_child_permitted_attributes(
                   "#{association}_attributes".to_sym, object.permitted_attributes
-              )
+                )
             end
           end
         end
@@ -35,9 +35,9 @@ module StrongForm
 
       def link_to_remove(*args, &block)
         return if object.respond_to?(:permitted_attributes) &&
-          !object.permitted_attributes.nil? &&
-          object.permitted_attributes != true &&
-          !object.permitted_attributes.include?(:_destroy)
+                  !object.permitted_attributes.nil? &&
+                  object.permitted_attributes != true &&
+                  !object.permitted_attributes.include?(:_destroy)
         orig_link_to_remove(*args, &block)
       end
     end
