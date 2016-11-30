@@ -2,6 +2,10 @@
 
 ## master
 
+### Bugs fixed
+
+* Always respect explicitly set `disabled` html attribute. (`disabled: false` was ignored)
+
 ## 0.0.9
 
 * Make it work with Rails 5

@@ -54,6 +54,29 @@ RSpec.describe 'strong form' do
           .to be_falsy
       end
     end
+
+    context 'with `disabled: false` input in html' do
+      before(:each) do
+        new_user = User.new
+        allow(User).to receive(:new) do
+          new_user.permitted_attributes = []
+          new_user
+        end
+        subject
+      end
+
+      (all_user_attributes - %i(last_name)).each do |attr|
+        it "should disable #{attr}" do
+          expect(page.find('[name="user[' + attr.to_s + ']"]')[:disabled])
+            .to be_truthy
+        end
+      end
+
+      it 'should enable last_name' do
+        expect(page.find('[name="user[last_name]"]')[:disabled])
+          .to be_falsy
+      end
+    end
   end
 
   describe 'nested form' do

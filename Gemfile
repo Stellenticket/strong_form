@@ -7,9 +7,6 @@ gemspec
 
 if ENV['RAILS_VERSION'] == '5'
   gem 'rails', '~> 5.x'
-  %w(rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support).each do |lib|
-    gem lib, git: "git://github.com/rspec/#{lib}.git", branch: 'master'
-  end
 end
 
 # Declare any dependencies that are still in development here instead of in

@@ -1,5 +1,5 @@
 = f.text_field :first_name
-= f.text_field :last_name
+= f.text_field :last_name, disabled: false
 = f.select :gender, %i(m f)
 = f.text_area :description
 = f.select :roles, %i(admin user banned), multiple: true
