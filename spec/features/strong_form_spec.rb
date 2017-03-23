@@ -31,7 +31,7 @@ RSpec.describe 'strong form' do
       before(:each) do
         new_user = User.new
         allow(User).to receive(:new) do
-          new_user.permitted_attributes = [:last_name, roles: []]
+          new_user.permitted_attributes = [:last_name, { roles: [], something: [] }]
           new_user
         end
         subject

@@ -5,6 +5,7 @@
 ### Bugs fixed
 
 * Always respect explicitly set `disabled` html attribute. (`disabled: false` was ignored)
+* Do correctly enable inputs if permitted attributes includes a hash with multiple keys. (e.g. `permitted_attributes: [:some_attr, { first_key: [], second_key: [] }]`)
 
 ## 0.0.9
 

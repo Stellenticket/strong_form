@@ -16,8 +16,7 @@ module StrongForm
           TextField
           TimeZoneSelect
         ).each do |klass|
-          "ActionView::Helpers::Tags::#{klass}"
-            .constantize.include StrongForm::Tag
+          "ActionView::Helpers::Tags::#{klass}".constantize.include StrongForm::Tag
         end
 
         if defined?(::NestedForm)

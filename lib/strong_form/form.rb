@@ -24,7 +24,7 @@ module ActionView
         # search for nested attributes
 
         # record_name is of the form `user[child_models_attributes][0]`
-        # try to extract `child_models_attributes`
+        # extract `child_models_attributes`
         permitted_name =
           record_name.match(/.*?\[([^\]\[]+)\](\[[0-9]+\])?$/)[1].to_sym
 
