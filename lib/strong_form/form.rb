@@ -30,7 +30,7 @@ module ActionView
 
         # find the hash with the key `child_models_attributes`
         record_object.permitted_attributes =
-          StrongForm::Finder.find_child_permitted_attributes(
+          StrongForm::Helper.find_child_permitted_attributes(
             permitted_name, parent_permitted_attributes
           )
       end
@@ -51,6 +51,16 @@ module ActionView
 
         builder = instantiate_builder(record_name, record_object, options)
         capture(builder, &block)
+      end
+    end
+  end
+end
+
+module ActionView
+  module Helpers
+    class FormBuilder
+      def attribute_permitted?(name)
+        StrongForm::Helper.attribute_permitted?(name, object.try(:permitted_attributes))
       end
     end
   end

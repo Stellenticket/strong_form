@@ -23,7 +23,7 @@ module StrongForm
               options[:model_object].permitted_attributes = true
             else
               options[:model_object].permitted_attributes =
-                StrongForm::Finder.find_child_permitted_attributes(
+                StrongForm::Helper.find_child_permitted_attributes(
                   "#{association}_attributes".to_sym, object.permitted_attributes
                 )
             end

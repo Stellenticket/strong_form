@@ -1,4 +1,4 @@
-require 'strong_form/finder'
+require 'strong_form/helper'
 require 'strong_form/form'
 require 'strong_form/record'
 require 'strong_form/tag'

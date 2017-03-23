@@ -62,9 +62,3 @@ new or remove existing records.
 Code Status
 ===
 [![Build Status](https://travis-ci.org/Stellenticket/strong_form.svg?branch=master)](https://travis-ci.org/Stellenticket/strong_form)
-
-ToDo
-===
-
- * Allow to skip field output instead of disabling it
- * Allow to manually set replacement for a disabled field
