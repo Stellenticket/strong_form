@@ -1,19 +1,25 @@
 StrongForm
 ===
 
-Let's assume you use [strong parameters](https://github.com/rails/strong_parameters)
+Let's assume you use [strong parameters](https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters)
 and have this:
 
 ```
-def user_attributes
-  params.require(:user).permit(:first_name, :last_name)
+def update
+  ...
+  user.update params.require(:user).permit(permitted_user_attributes)
+  ...
+end
+
+def permitted_user_attributes
+  %i[first_name last_name]
 end
 ```
 
 Then you can simply output your form with those permitted parameters:
 
 ```
-form_for(@user, permitted_attributes: user_attributes) do |f|
+form_for(@user, permitted_attributes: permitted_user_attributes) do |f|
   f.text_field :first_name
   f.text_field :last_name
   f.text_field :internal_id
